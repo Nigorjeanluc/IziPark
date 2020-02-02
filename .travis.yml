@@ -1,0 +1,34 @@
+global:
+  - CI=true
+  - SECRET_KEY=12345
+  - NODE_ENV=test
+  - CC_TEST_REPORTER_ID=d570e2625aaffa20e7828eaddfbec748c525e866b6d413472bc26e188cb2bc6a
+  - DATABASE_URL_TEST=postgres://postgres@localhost:5432/barefootnomaddb_test
+  - APP_URL_BACKEND=http://localhost:3000
+  - APP_URL_FRONTEND=http://localhost:5000
+  - FACEBOOK_APP_ID=
+  - FACEBOOK_APP_SECRET=
+  - TWITTER_CONSUMER_KEY=
+  - TWITTER_CONSUMER_SECRET=
+  - GOOGLE_CONSUMER_KEY=
+  - GOOGLE_CONSUMER_SECRET=
+language: node_js
+node_js:
+  - 'stable'
+cache:
+  directories:
+    - 'node_modules'
+services:
+  - postgresql
+before_script:
+  - psql -c 'CREATE DATABASE authorhavens_test;' -U postgres
+  - npm i sequelize-cli -g
+  - npm i sequelize -g
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+after_success:
+  - npm run coveralls
+

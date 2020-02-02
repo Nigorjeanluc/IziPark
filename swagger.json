@@ -1,0 +1,116 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "BareFoot Nomad is application that Make company global travel and accommodation easy and convenient for the strong workforce of savvy members of staff, by leveraging the modern web.",
+    "version": " ",
+    "title": "BareFootNomad",
+    "termsOfService": "https://github.com/Stackup-Rwanda/ateam-bn-backend/blob/develop/README.md",
+    "contact": { "email": "the-a-team@gmail.com" }
+  },
+
+  "host": "localhost:3000",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authentication endpoints"
+    },
+    {
+      "name": "Signup Endpoint",
+      "description": "Access to signup API endpoints"
+    }
+  ],
+  "paths": {
+    "/auth/signup/": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Signup",
+        "description": "User signup endpoint",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User credentials to be used for signup",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Signup"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User was created successfully"
+          },
+          "400": {
+            "description": "Invalid credentials"
+          },
+          "409": {
+            "description": "This user already exists, use another email or username"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Signup": {
+      "type": "object",
+      "required": [
+        "name",
+        "gender",
+        "email",
+        "username",
+        "password",
+        "birthdate",
+        "preferredLanguage",
+        "referredCurrency",
+        "location",
+        "role",
+        "department",
+        "lineManager"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "birthdate": {
+          "type": "date"
+        },
+        "preferredLanguage": {
+          "type": "string"
+        },
+        "preferredCurrency": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "department": {
+          "type": "string"
+        },
+        "lineManager": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "schemes": ["http", "https"],
+  "consumes": ["application/json", "none"],
+  "produces": ["application/json", "none"]
+}
