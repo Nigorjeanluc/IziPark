@@ -1,5 +1,5 @@
 import Auth from '../helpers/TokenHelper';
-import adminExists from '../helpers/adminAuthHelpers';
+import placeExists from '../helpers/placeAuthHelpers';
 
 export default (req, res, next) => {
     try {
@@ -9,13 +9,13 @@ export default (req, res, next) => {
                 error: 'Please provide a token first',
             });
         }
-        const token = req.headers.authorization.split(' ')[1];
+        const token = req.headers.authorization;
         const decoded = Auth.decodedToken(token);
         req.userData = decoded;
-        if (!adminExists('email', req.userData.email)) {
-            return res.status(401).send({
-                status: 401,
-                error: 'Sign up first please',
+        if (!placeExists('email', req.userData.email)) {
+            return res.status(403).send({
+                status: 403,
+                error: 'Not Allowed',
             });
         }
         return next();

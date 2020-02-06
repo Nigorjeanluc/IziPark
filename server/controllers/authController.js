@@ -54,6 +54,7 @@ class AuthController {
         error: 'You are not allowed',
       });
     }
+    console.log(req.body.password, doesExist.password);
     const pswMatch = PasswordHelper.checkPassword(req.body.password, doesExist.password);
     if (pswMatch) {
       return res.status(200).json({

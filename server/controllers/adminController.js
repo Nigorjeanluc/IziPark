@@ -1,4 +1,3 @@
-import adminExists from '../helpers/adminAuthHelpers';
 import placeExists from '../helpers/placeAuthHelpers';
 import PasswordHelper from '../helpers/passwordHasher';
 import ManagerHelper from '../helpers/ManagerHelper';
@@ -15,7 +14,45 @@ class AdminController {
    * @param {object} res The response.
    * @returns {object} The status and some data of the user.
    */
+  static async editPlace(req, res) {
+    const doesExist = await placeExists('email', req.body.email);;
+    if (!doesExist) {
+      return res.status(401).json({
+        status: 401,
+        error: `The place named ${doesExist.placeName} already does not exist`,
+      });
+    }
+
+    const place = await ManagerHelper.editPlace(req.body);
+
+    return res.status(201).json({
+      status: 201,
+      message: 'The place was successfully updated',
+      data: {
+        name: place.placeName,
+        manager: place.email,
+        image: place.image,
+        phone: place.phoneNumber,
+        createdAt: place.createdAt
+      }
+    });
+  }
+
+  /**
+   * This method handle the signup request.
+   * @param {object} req The user's request.
+   * @param {object} res The response.
+   * @returns {object} The status and some data of the user.
+   */
   static async addPlace(req, res) {
+    const doesExist = await placeExists('email', req.body.email);;
+    if (doesExist) {
+      return res.status(401).json({
+        status: 401,
+        error: `The place named ${doesExist.placeName} already exists`,
+      });
+    }
+
     const place = await ManagerHelper.savePlace(req.body);
 
     return res.status(201).json({

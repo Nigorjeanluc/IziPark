@@ -1,6 +1,6 @@
 import models from '../../models';
 
-const { place } = models;
+const { employee } = models;
 
 
 /**
@@ -8,7 +8,7 @@ const { place } = models;
  * two methods, one to help hashing password (hashPassword)
  * and the second to retrieve hashed password
  */
-class ManagerHelper {
+class AgentHelper {
 
   /**
    * Finds the user's email if he/she exists.
@@ -16,9 +16,9 @@ class ManagerHelper {
    * @param {string} val value to be found.
    * @returns {object} The users's data.
    */
-  static async placeExists(attr, val) {
-    const Place = await place.findOne({ where: { [attr]: val } });
-    return Place;
+  static async agentExists(attr, val) {
+    const Employee = await employee.findOne({ where: { [attr]: val } });
+    return Employee;
   }
 
   /**
@@ -26,29 +26,30 @@ class ManagerHelper {
    * @param {object} building The request sent by a user.
    * @returns {object} The users's data.
    */
-  static async savePlace(building) {
-    const savedPlace = await place.create(
+  static async saveAgent(agent) {
+    const savedAgent = await employee.create(
       {
-        ...building,
+        ...agent,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         fields:
         [
-          'placeName',
+          'fullName',
           'email',
           'image',
-          'manager',
           'password',
           'phoneNumber',
+          'serviceHours',
+          'placeId',
           'createAt',
           'updatedAt'
         ]
       }
     );
 
-    return savedPlace;
+    return savedAgent;
   }
 }
-export default ManagerHelper;
+export default AgentHelper;

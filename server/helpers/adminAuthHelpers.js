@@ -9,7 +9,6 @@ const { admin } = models;
  * @returns {object} The users's data.
  */
 const adminExists = async (attr, val) => {
-  console.log(Admin);
   const Admin = await admin.findOne({ where: { [attr]: val } });
   return Admin;
 }
