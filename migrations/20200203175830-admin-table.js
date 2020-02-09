@@ -17,7 +17,5 @@ export default {
     updatedAt: { allowNull: false, type: Sequelize.DATE }
   }),
 
-  down: (queryInterface) => {
-    queryInterface.dropTable('admins');
-  }
+  down: (queryInterface) => queryInterface.dropTable('admins')
 };

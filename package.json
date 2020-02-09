@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npm run droptables:test && npm run createtables:test && npm run seed:test && cross-env NODE_ENV=test nyc --reporter=text --reporter=lcov mocha --require @babel/register --require babel-polyfill ./server/tests/*.js --exit",
     "dev": "nodemon --exec babel-node ./server/index.js",
-    "start": "cross-env NODE_ENV=production babel-node ./server/index.js",
+    "start": "npm run createtables:pro && cross-env NODE_ENV=production babel-node ./server/index.js",
     "createtables:pro": "cross-env NODE_ENV=production npx sequelize-cli db:migrate",
     "seed:pro": "cross-env NODE_ENV=production npx sequelize-cli db:seed:all",
     "droptables:pro": "cross-env NODE_ENV=production npx sequelize-cli db:migrate:undo:all",
@@ -42,6 +42,7 @@
     "coveralls": "^3.0.9",
     "cross-env": "^7.0.0",
     "dotenv": "^8.2.0",
+    "duration": "^0.2.2",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mailgen": "^2.0.10",

@@ -13,11 +13,10 @@ export default {
     phoneNumber: { type: Sequelize.STRING },
     serviceHours: { type: Sequelize.STRING },
     placeId: { type: Sequelize.INTEGER },
+    isVerified: { type: Sequelize.BOOLEAN },
     createdAt: { allowNull: false, type: Sequelize.DATE },
     updatedAt: { allowNull: false, type: Sequelize.DATE }
   }),
 
-  down: (queryInterface) => {
-    queryInterface.dropTable('employees');
-  }
+  down: (queryInterface) => queryInterface.dropTable('employees')
 };

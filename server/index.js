@@ -26,7 +26,7 @@ app.use(`${basePath}/documentation`, swaggerUi.serve, swaggerUi.setup(apiDocumen
 app.get('**', (req, res) => {
   res.status(400).send({
     status: 400,
-    message: `Hey !! You are Welcome to BareFoot Nomad, Use the link below its documentation of application`,
+    message: `Hey !! You are Welcome to Izi Parking Application, Use the link below its documentation of application`,
     data: `/api/documentation`
   });
 });

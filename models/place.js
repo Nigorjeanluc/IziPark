@@ -6,6 +6,7 @@ const placeDefinition = (sequelize, DataTypes) => {
     manager: { type: DataTypes.STRING },
     password: { type: DataTypes.STRING },
     phoneNumber: { type: DataTypes.STRING },
+    isVerified: { type: DataTypes.BOOLEAN },
     createdAt: { type: DataTypes.DATE },
     updatedAt: { type: DataTypes.DATE }
   }, {});

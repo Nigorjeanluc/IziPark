@@ -7,6 +7,7 @@ const agentDefinition = (sequelize, DataTypes) => {
     phoneNumber: { type: DataTypes.STRING },
     serviceHours: { type: DataTypes.STRING },
     placeId: { type: DataTypes.INTEGER },
+    isVerified: { type: DataTypes.BOOLEAN },
     createdAt: { type: DataTypes.DATE },
     updatedAt: { type: DataTypes.DATE }
   }, {});
