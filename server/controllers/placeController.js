@@ -43,8 +43,9 @@ class PlaceController {
    * @returns {object} The status and some data of the user.
    */
   static async addEmployee(req, res) {
-    const doesExist = await AgentHelper.agentExists('email', req.body.email);;
+    const doesExist = await AgentHelper.agentExists('email', req.body.email);
     if (doesExist) {
+      console.log(doesExist)
       return res.status(401).json({
         status: 401,
         error: `Employee ${doesExist.fullName} already exists`,

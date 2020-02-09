@@ -15,4 +15,9 @@ router.post(
   asyncErrorHandler(AuthController.placeLogin)
 );
 
+router.post(
+  '/agent/login',
+  asyncErrorHandler(AuthController.agentLogin)
+);
+
 export default router;
