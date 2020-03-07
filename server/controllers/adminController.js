@@ -24,20 +24,12 @@ class AdminController {
       });
     }
 
-    const exists = await DeviceHelper.deviceExists('id', req.body.placeId);
-    if (!exists) {
-      return res.status(401).json({
-        status: 401,
-        error: `The device ID's placdsde : ${req.body.placeId} does not exist`,
-      });
-    }
-
-    const place = await ManagerHelper.placeExists('id', exists.placeId);
+    const place = await ManagerHelper.placeExists('id', req.body.placeId);
 
     if (!place) {
       return res.status(401).json({
         status: 401,
-        error: `The device ID's place : ${exists.placeId} does not exist`,
+        error: `The device ID's place : ${req.body.placeId} does not exist`,
       });
     }
 
@@ -46,7 +38,7 @@ class AdminController {
 
     return res.status(201).json({
       status: 201,
-      message: `The device was successfully added to the place called ${place.placeId}`,
+      message: `The device was successfully added to the place called ${place.placeName}`,
       data: {
         model: device.model,
         device_id: device.device_id,
