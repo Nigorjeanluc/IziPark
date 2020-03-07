@@ -9,7 +9,7 @@
     "start": "cross-env NODE_ENV=production babel-node ./server/index.js",
     "createtables:dev": "npx sequelize db:migrate",
     "seed:dev": "npx sequelize db:seed:all",
-    "droptables:dev": "npx sequelize db:migrate:undo",
+    "droptables:dev": "npx sequelize db:migrate:undo:all",
     "createtables:test": "cross-env NODE_ENV=test npx sequelize db:migrate",
     "seed:test": "cross-env NODE_ENV=test npx sequelize db:seed:all",
     "coveralls": "npm test && nyc report --reporter=text-lcov | coveralls",

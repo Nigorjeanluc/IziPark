@@ -1,6 +1,7 @@
 import placeExists from '../helpers/placeAuthHelpers';
 import PasswordHelper from '../helpers/passwordHasher';
 import ManagerHelper from '../helpers/ManagerHelper';
+import DeviceHelper from '../helpers/DeviceHelper';
 
 /**
  * This class contains all methods
@@ -8,6 +9,56 @@ import ManagerHelper from '../helpers/ManagerHelper';
  * signup and login endpoints' request.
  */
 class AdminController {
+  /**
+   * This method assign a device to a place.
+   * @param {object} req The http request.
+   * @param {object} res The http response.
+   * @returns {object} The status and some data of the device.
+   */
+  static async addDevice(req, res) {
+    const deviceExists = await DeviceHelper.deviceExists('device_id', req.body.device_id);
+    if (deviceExists) {
+      return res.status(401).json({
+        status: 401,
+        error: `The device named ${deviceExists.model} with Model ID ${deviceExists.device_id} already exists`,
+      });
+    }
+
+    const exists = await DeviceHelper.deviceExists('id', req.body.placeId);
+    if (!exists) {
+      return res.status(401).json({
+        status: 401,
+        error: `The device ID's placdsde : ${req.body.placeId} does not exist`,
+      });
+    }
+
+    const place = await ManagerHelper.placeExists('id', exists.placeId);
+
+    if (!place) {
+      return res.status(401).json({
+        status: 401,
+        error: `The device ID's place : ${exists.placeId} does not exist`,
+      });
+    }
+
+    const device = await DeviceHelper.saveDevice(req.body);
+    console.log(device);
+
+    return res.status(201).json({
+      status: 201,
+      message: `The device was successfully added to the place called ${place.placeId}`,
+      data: {
+        model: device.model,
+        device_id: device.device_id,
+        placeId: place.placeId,
+        manager: place.manager,
+        phoneNumber: place.phoneNumber,
+        description: device.description,
+        createdAt: place.createdAt
+      }
+    });
+  }
+
   /**
    * This method handle the signup request.
    * @param {object} req The user's request.

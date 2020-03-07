@@ -20,6 +20,17 @@ class TokenHelper {
   }
 
   /**
+   * Hashs the password for signup and login response.
+   * @param {int} id The device's id.
+   * @param {string} device_id The device's given id.
+   * @param {string} model The device's model.
+   * @returns {string} The device's hashed password.
+   */
+  static generateTokenDevice(id, device_id, model) {
+    return jwt.sign({ id, device_id, model }, process.env.SECRET_KEY);
+  }
+
+  /**
    * Hashs the password.
    * @param {string} token The user's token.
    * @param {string} secrectKey The secret key.

@@ -20,4 +20,8 @@ router.post(
   asyncErrorHandler(AuthController.agentLogin)
 );
 
+router.post(
+  '/device/login',
+  asyncErrorHandler(AuthController.deviceLogin)
+);
 export default router;

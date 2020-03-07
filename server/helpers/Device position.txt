@@ -1,0 +1,6 @@
+Device position (Gate)
+
+History
+ - plate number
+ - add employee
+ - card ID

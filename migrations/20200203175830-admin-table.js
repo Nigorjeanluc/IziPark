@@ -13,11 +13,9 @@ export default {
     password: { type: Sequelize.STRING },
     phoneNumber: { type: Sequelize.STRING },
     role: { type: Sequelize.STRING },
-    createdAt: { allowNull: false, type: Sequelize.DATE },
-    updatedAt: { allowNull: false, type: Sequelize.DATE }
+    createdAt: { type: Sequelize.DATE },
+    updatedAt: { type: Sequelize.DATE }
   }),
 
-  down: (queryInterface) => {
-    queryInterface.dropTable('admins');
-  }
+  down: (queryInterface) => queryInterface.dropTable('admins')
 };

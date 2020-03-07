@@ -2,6 +2,7 @@ import TokenHelper from '../helpers/TokenHelper';
 import adminExists from '../helpers/adminAuthHelpers';
 import placeExists from '../helpers/placeAuthHelpers';
 import agentExists from '../helpers/employeeAuthHelpers';
+import DeviceHelper from '../helpers/DeviceHelper';
 import PasswordHelper from '../helpers/passwordHasher';
 
 /**
@@ -100,6 +101,31 @@ class AuthController {
     return res.status(401).json({
       status: 401,
       error: 'Invalid credentials',
+    });
+  }
+
+  /**
+   * This method handle the signup request.
+   * @param {object} req The user's request.
+   * @param {object} res The response.
+   * @returns {object} The status and some data of the user.
+   */
+  static async deviceLogin(req, res) {
+    const doesExist = await DeviceHelper.deviceExists('device_id', req.body.device_id);
+    if (!doesExist) {
+      return res.status(403).json({
+        status: 403,
+        error: 'This device is not allowed',
+      });
+    }
+
+    
+    return res.status(200).json({
+      status: 200,
+      message: `Access granted for the device with ID: ${doesExist.device_id}`,
+      data: {
+        token: TokenHelper.generateTokenDevice(doesExist.id, doesExist.device_id, doesExist.model)
+      }
     });
   }
 }

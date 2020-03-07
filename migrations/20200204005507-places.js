@@ -12,11 +12,9 @@ export default {
     manager: { type: Sequelize.STRING },
     password: { type: Sequelize.STRING },
     phoneNumber: { type: Sequelize.STRING },
-    createdAt: { allowNull: false, type: Sequelize.DATE },
-    updatedAt: { allowNull: false, type: Sequelize.DATE }
+    createdAt: { type: Sequelize.DATE },
+    updatedAt: { type: Sequelize.DATE }
   }),
 
-  down: (queryInterface) => {
-    queryInterface.dropTable('places');
-  }
+  down: (queryInterface) => queryInterface.dropTable('places')
 };
