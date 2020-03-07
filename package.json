@@ -4,12 +4,14 @@
   "description": "Backend for Izi parking project",
   "main": "index.js",
   "scripts": {
+    "heroku-postbuild": "npm run build",
+    "build": "babel server -d dist",
     "test": "npm run droptables:test && npm run createtables:test && npm run seed:test && cross-env NODE_ENV=test nyc --reporter=text --reporter=lcov mocha --require @babel/register --require babel-polyfill ./server/tests/*.js --exit",
     "dev": "nodemon --exec babel-node ./server/index.js",
     "createtables:pro": "cross-env NODE_ENV=production npx sequelize db:migrate",
     "seed:pro": "cross-env NODE_ENV=production npx sequelize db:seed:all",
     "droptables:pro": "cross-env NODE_ENV=production npx sequelize db:migrate:undo:all",
-    "start": "cross-env NODE_ENV=production babel-node ./server/index.js",
+    "start": "npm run build && cross-env NODE_ENV=production babel-node ./dist/index.js",
     "createtables:dev": "npx sequelize db:migrate",
     "seed:dev": "npx sequelize db:seed:all",
     "droptables:dev": "npx sequelize db:migrate:undo:all",
@@ -70,5 +72,9 @@
     "nodemon": "^2.0.2",
     "prettier": "^1.19.1",
     "sequelize-cli": "^5.5.1"
+  },
+  "engines": {
+    "npm": "6.4.1",
+    "node": "10.13.0"
   }
 }
