@@ -12,4 +12,9 @@ router.post(
   asyncErrorHandler(DeviceController.addEntry)
 );
 
+router.post(
+  '/device/exit', isDevice, addEntryValidator,
+  asyncErrorHandler(DeviceController.addExit)
+);
+
 export default router;
