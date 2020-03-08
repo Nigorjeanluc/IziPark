@@ -27,8 +27,18 @@ class HistortHelper {
    * @param {string} val accommodation's id table field..
    * @returns {object} a certain rating's data.
   */
-  static async findLatestHistoy(attr, val) {
+  static async findLatestHistory(attr, val) {
     const rating = await historie.findAll({ limit: 1, where: { [attr]: val }, order: [['createdAt', 'DESC']] });
+    return rating;
+  }
+
+  /**
+   * Update history by accomodationId only.
+   * @param {string} val accommodation's id table field..
+   * @returns {object} a certain rating's data.
+  */
+  static async updateLatestHistory(id) {
+    const rating = await historie.update({ exitedAt: new Date() }, { where: { id } });
     return rating;
   }
 
