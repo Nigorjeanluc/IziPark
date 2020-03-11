@@ -76,21 +76,21 @@ class DeviceController {
 
     switch(duration.hours) {
       case 1:
-        amount = '200 Rwf'
-      case 2:
         amount = '300 Rwf'
-      case 3:
+      case 2:
         amount = '500 Rwf'
-      case 4:
+      case 3:
         amount = '2000 Rwf'
-      case 5:
+      case 4:
         amount = '5000 Rwf'
-      case 6:
+      case 5:
         amount = '7000 Rwf'
-      case 7:
+      case 6:
         amount = '9000 Rwf'
-      case 8:
+      case 7:
         amount = '11000 Rwf'
+      case 8:
+        amount = '12000 Rwf'
       default:
         amount = '200 Rwf'
     }
