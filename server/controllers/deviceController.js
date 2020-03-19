@@ -71,10 +71,10 @@ class DeviceController {
     const updatedHistory = await HistoryHelper.historyExists('id', exists[0].id);
 
     const duration = new Duration(updatedHistory.enteredAt, updatedHistory.exitedAt);
-
+    const hours = parseInt(duration.hours, 10);
     let amount;
 
-    switch(duration.hours) {
+    switch(hours) {
       case 1:
         amount = '300 Rwf'
       case 2:
@@ -92,7 +92,11 @@ class DeviceController {
       case 8:
         amount = '12000 Rwf'
       default:
-        amount = '200 Rwf'
+        if(hours > 8) {
+          amount = '12000Rwf';
+        } else {
+          amount = '200 Rwf'
+        }
     }
 
     return res.status(201).json({

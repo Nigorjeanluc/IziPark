@@ -34,7 +34,6 @@ class AdminController {
     }
 
     const device = await DeviceHelper.saveDevice(req.body);
-    console.log(device);
 
     return res.status(201).json({
       status: 201,
