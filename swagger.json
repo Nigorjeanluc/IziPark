@@ -1,110 +1,352 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "BareFoot Nomad is application that Make company global travel and accommodation easy and convenient for the strong workforce of savvy members of staff, by leveraging the modern web.",
+    "description": "Izipark is application that Make parking place predictable and easy control of parking places",
     "version": " ",
-    "title": "BareFootNomad",
+    "title": "Izipark",
     "termsOfService": "https://github.com/Stackup-Rwanda/ateam-bn-backend/blob/develop/README.md",
-    "contact": { "email": "the-a-team@gmail.com" }
+    "contact": { "email": "nigorjeanluc@gmail.com" }
   },
 
-  "host": "localhost:3000",
+  "host": "localhost:4001",
   "basePath": "/api",
   "tags": [
     {
-      "name": "Auth",
-      "description": "Authentication endpoints"
+      "name": "Admin login endpoint",
+      "description": "Access to login API endpoints"
     },
     {
-      "name": "Signup Endpoint",
-      "description": "Access to signup API endpoints"
+      "name": "Access to add a device",
+      "description": "Admin can add a device to a certain place"
+    },
+    {
+      "name": "Device login endpoint",
+      "description": "Access to device login API endpoints"
+    },
+    {
+      "name": "Device report entry endpoint",
+      "description": "Access for the device to report an entry API endpoints"
+    },
+    {
+      "name": "Device report exit endpoint",
+      "description": "Access for the device to report an exit API endpoints"
     }
   ],
   "paths": {
-    "/auth/signup/": {
+    "/admin/login/": {
       "post": {
-        "tags": ["Auth"],
-        "summary": "Signup",
-        "description": "User signup endpoint",
+        "tags": ["Admin login endpoint"],
+        "summary": "Admin login",
+        "description": "Admin login endpoint",
         "consumes": ["application/json"],
         "produces": ["application/json"],
         "parameters": [
           {
             "in": "body",
             "name": "body",
-            "description": "User credentials to be used for signup",
+            "description": "Admin's credentials to be used for login",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Signup"
+              "$ref": "#/definitions/AdminLogin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Welcome Admin, you are successfully logged in as Admin"
+          },
+          "400": {
+            "description": "Invalid credentials"
+          },
+          "403": {
+            "description": "You are not allowed"
+          }
+        }
+      }
+    },
+    "/admin/device/": {
+      "post": {
+        "tags": ["Access to add a device"],
+        "summary": "Admin can add a device",
+        "description": "Admin can add a device endpoint",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Admin's token"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Device's information to be filled",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AdminDevice"
             }
           }
         ],
         "responses": {
           "201": {
-            "description": "User was created successfully"
+            "description": "The device was successfully added to a certain place"
           },
           "400": {
             "description": "Invalid credentials"
           },
-          "409": {
-            "description": "This user already exists, use another email or username"
+          "401": {
+            "description": "The device already exists"
+          }
+        }
+      }
+    },
+    "/admin/place/": {
+      "post": {
+        "tags": ["Access to add a parking place"],
+        "summary": "Admin can add a parking place",
+        "description": "Admin can add a place endpoint",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Admin's token"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "The parking place's information to be filled",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AdminPlace"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The place was successfully added"
+          },
+          "400": {
+            "description": "Invalid credentials"
+          },
+          "401": {
+            "description": "The place already exists"
+          }
+        }
+      }
+    },
+    "/device/login/": {
+      "post": {
+        "tags": ["Device login endpoint"],
+        "summary": "Device login",
+        "description": "Device login endpoint",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Device's credentials to be used for login",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeviceLogin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Access granted for the device with ID: "
+          },
+          "400": {
+            "description": "Invalid credentials"
+          },
+          "403": {
+            "description": "This device is not allowed"
+          }
+        }
+      }
+    },
+    "/device/entry/": {
+      "post": {
+        "tags": ["Device report entry endpoint"],
+        "summary": "Device entry",
+        "description": "Device entry endpoint",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Device's token"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Entry report from the device at the entry gate of the parking place",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeviceEntry"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "You have entered the parking at certain time"
+          },
+          "400": {
+            "description": "Invalid credentials"
+          },
+          "401": {
+            "description": "You card ID already entered the parking"
+          }
+        }
+      }
+    },
+    "/device/exit/": {
+      "post": {
+        "tags": ["Device report exit endpoint"],
+        "summary": "Device exit",
+        "description": "Device exit endpoint",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Device's token"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Exit report from the device at the exit gate of the parking place",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeviceExit"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "You have exited the parking at certain time"
+          },
+          "400": {
+            "description": "Invalid credentials"
+          },
+          "401": {
+            "description": "You card ID already exited the parking"
           }
         }
       }
     }
   },
   "definitions": {
-    "Signup": {
+    "AdminLogin": {
       "type": "object",
       "required": [
-        "name",
-        "gender",
         "email",
-        "username",
-        "password",
-        "birthdate",
-        "preferredLanguage",
-        "referredCurrency",
-        "location",
-        "role",
-        "department",
-        "lineManager"
+        "password"
       ],
       "properties": {
-        "name": {
+        "email": {
           "type": "string"
         },
-        "gender": {
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "AdminDevice": {
+      "type": "object",
+      "required": [
+        "model",
+        "device_id",
+        "placeId",
+        "description"
+      ],
+      "properties": {
+        "model": {
+          "type": "string"
+        },
+        "device_id": {
+          "type": "string"
+        },
+        "placeId": {
+          "type": "integer"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "AdminPlace": {
+      "type": "object",
+      "required": [
+        "placeName",
+        "manager",
+        "email",
+        "image",
+        "password",
+        "phoneNumber"
+      ],
+      "properties": {
+        "placeName": {
+          "type": "string"
+        },
+        "manager": {
           "type": "string"
         },
         "email": {
           "type": "string"
         },
-        "username": {
+        "image": {
           "type": "string"
         },
         "password": {
           "type": "string"
         },
-        "birthdate": {
-          "type": "date"
-        },
-        "preferredLanguage": {
+        "phoneNumber": {
           "type": "string"
-        },
-        "preferredCurrency": {
+        }
+      }
+    },
+    "DeviceLogin": {
+      "type": "object",
+      "required": [
+        "device_id"
+      ],
+      "properties": {
+        "device_id": {
           "type": "string"
-        },
-        "location": {
+        }
+      }
+    },
+    "DeviceEntry": {
+      "type": "object",
+      "required": [
+        "cardId"
+      ],
+      "properties": {
+        "cardId": {
           "type": "string"
-        },
-        "role": {
-          "type": "string"
-        },
-        "department": {
-          "type": "string"
-        },
-        "lineManager": {
+        }
+      }
+    },
+    "DeviceExit": {
+      "type": "object",
+      "required": [
+        "cardId"
+      ],
+      "properties": {
+        "cardId": {
           "type": "string"
         }
       }
